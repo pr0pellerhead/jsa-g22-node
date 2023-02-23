@@ -23,9 +23,33 @@ const studenti = [
 // 4. Градови подредени по групна висина на просек.
 // 5. Вкупен просек на студенти чие име завршува на а наспроти сите останати.
 
+// if(true && true || false) {
 
+// }
 
+// if("") {
 
+// }
+
+// if(undefined) {
+
+// }
+
+// if(null) {
+
+// }
+
+// if(0) {
+
+// }
+
+// if("0") {
+
+// }
+
+// if([]) {
+
+// }
 
 
 
@@ -68,8 +92,44 @@ const studenti = [
 // console.log(studentiFilter);
 
 // враќа елемент од низата кој одговара на поставениот услов
-let studentiFind = studenti.find((s) => {
-    return s.ime === 'Pero';
+// let studentiFind = studenti.find((s) => {
+//     return s.ime === 'Pero';
+// });
+
+// console.log(studentiFind);
+
+
+// Градови подредени по групна висина на просек.
+// studenti {ime: 'Bojan', prosek: 7.5, grad: 'Skopje'}
+
+// ["Skopje", "Prilep", ...]
+
+// let set = new Set(studenti.map(s => s.grad));
+
+let set = []; // ["Skopje", "Prilep", ...]]
+
+for(let i = 0; i < studenti.length; i++) {
+    if(!set.includes(studenti[i].grad)) {
+        set.push(studenti[i].grad);
+    }
+}
+
+let res = Array.from(set).map(g => {
+    let sbroj = studenti.filter(s => s.grad === g).length; // колку студенти се од одреден град
+    let svkupno = studenti.reduce((acc, student) => {
+        if(student.grad === g) { // дали студентот е од одреден град
+            return acc + student.prosek; // го собираме просекот со просеците на студентите од истиот град
+        }
+        return acc; // врати ја претходната состојба
+    }, 0);
+    return {
+        grad: g,
+        prosek: svkupno / sbroj
+    };
+}).sort((a, b) => {
+    if(a.prosek > b.prosek) return -1;
+    if(a.prosek < b.prosek) return 1;
+    if(a.prosek == b.prosek) return 0;
 });
 
-console.log(studentiFind);
+console.log(res);
