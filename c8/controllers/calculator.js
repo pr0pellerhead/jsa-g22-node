@@ -2,7 +2,7 @@ const fs = require('fs');
 
 const getCalculator = async (req, res) => {
     try {
-        let output = await parseTemplate('calculator_form', '');
+        let output = await parseTemplate('calculator_form');
         res.send(output);
     } catch (err) {
         console.log(err);
@@ -35,7 +35,7 @@ const postCalculator = async (req, res) => {
     }
 
     try {
-        let output = await parseTemplate('calculator', result);
+        let output = await parseTemplate('calculator', {data: result, ime: 'Bojan'});
         res.send(output);
     } catch (err) {
         console.log(err);
@@ -43,13 +43,18 @@ const postCalculator = async (req, res) => {
     }
 };
 
-const parseTemplate = async (template, data) => {
+const parseTemplate = async (template, data = null) => {
     return new Promise((success, fail) => {
         fs.readFile(`${__dirname}/../views/${template}.html`, 'utf8', (err, content) => {
             if (err) {
                 return fail(err);
             }
-            content = content.replace('{{data}}', data);
+            // content = content.replace('{{data}}', data);
+            if(data) {
+                for(d in data) {
+                    content = content.replaceAll(`{{${d}}}`, data[d]);
+                }
+            }
             return success(content);
         });
     });
