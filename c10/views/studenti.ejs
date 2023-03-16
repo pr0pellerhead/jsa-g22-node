@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <table border="1" width="100%">
+        <tr>
+            <th>Име</th>
+            <th>Презиме</th>
+            <th>Прозек</th>
+            <th>Бришење</th>
+        </tr>
+        <% data.forEach((student, i) => { %>
+        <tr>
+            <td><%=student.ime %></td>
+            <td><%=student.prezime %></td>
+            <td><%=student.prosek %></td>
+            <td>
+                <a href="/brishi?i=<%=i %>">Бриши</a>
+            </td>
+        </tr>
+        <% }); %>
+    </table>
+</body>
+</html>
